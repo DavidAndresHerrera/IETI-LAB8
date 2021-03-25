@@ -13,9 +13,7 @@ import java.util.List;
  * 8/21/17.
  */
 @Service
-public class UserServiceImpl
-    implements UserService
-{
+public class UserServiceImpl implements UserService {
 
     private List<User> users = new ArrayList<>();
 
@@ -39,27 +37,47 @@ public class UserServiceImpl
     }
 
     @Override
-    public User getUser( Long id )
-    {
-        return users.get( 0 );
+    public User getUser( int id ) {
+        return users.get(id);
     }
 
     @Override
-    public User createUser( User user )
-    {
-        return users.get( 0 );
+    public User createUser( User user ) {
+        boolean existe = false;
+        for (User i: users){
+            if (i.getEmail().equals(user.getEmail())){
+                existe = true;
+            }
+        }
+        if(!existe){
+            users.add(user);
+            return users.get(users.size()-1);
+        }
+        else{
+            return null;
+        }
+
     }
 
     @Override
     public User findUserByEmail( String email )
     {
-        return users.get( 0 );
+        for(User i:users){
+            if (i.getEmail().equals(email)){
+                return i;
+            }
+        }
+        return null;
     }
 
     @Override
-    public User findUserByEmailAndPassword( String email, String password )
-    {
-        return users.get( 0 );
+    public User findUserByEmailAndPassword( String email, String password ) {
+        for(User i:users){
+            if (i.getEmail().equals(email) && i.getPassword().equals(password)){
+                return i;
+            }
+        }
+        return null;
     }
 
 }
